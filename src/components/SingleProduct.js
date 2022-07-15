@@ -1,6 +1,6 @@
 import { Card, Button } from 'react-bootstrap';
 import { CartState } from '../context/Context';
-import Rating from './components/Rating';
+import Rating from './Rating';
 
 const SingleProduct = ({ prod }) => {
 

@@ -4,7 +4,8 @@ import {
     FormControl,
     Dropdown,
     Nav,
-    Badge
+    Badge,
+    Button
 } from "react-bootstrap";
 import { FaShoppingCart } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
