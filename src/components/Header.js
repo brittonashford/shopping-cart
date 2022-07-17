@@ -1,23 +1,23 @@
+import { FaShoppingCart } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 import {
-    Navbar,
-    Container,
-    FormControl,
-    Dropdown,
-    Nav,
     Badge,
-    Button
+    Button,
+    Container,
+    Dropdown,
+    FormControl,
+    Nav,
+    Navbar,
 } from "react-bootstrap";
-import { FaShoppingCart } from 'react-icons/fa';
-import { AiFillDelete } from 'react-icons/ai';
-import '../App.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 import { CartState } from "../context/Context";
+import "./styles.css";
 
 const Header = () => {
-
     const {
         state: { cart },
-        dispatch
+        dispatch,
+        productDispatch,
     } = CartState();
 
     return (
@@ -26,13 +26,23 @@ const Header = () => {
                 <Navbar.Brand>
                     <Link to="/">Shopping Cart</Link>
                 </Navbar.Brand>
-                <Navbar.Text className="search">
-                    <FormControl
-                        style={{ width: 500 }}
-                        placeholder="Search a product"
-                        className="m-auto"
-                    />
-                </Navbar.Text>
+                {useLocation().pathname.split("/")[1] !== "cart" && (
+                    <Navbar.Text className="search">
+                        <FormControl
+                            style={{ width: 500 }}
+                            type="search"
+                            placeholder="Search a product..."
+                            className="m-auto"
+                            aria-label="Search"
+                            onChange={(e) => {
+                                productDispatch({
+                                    type: "FILTER_BY_SEARCH",
+                                    payload: e.target.value,
+                                });
+                            }}
+                        />
+                    </Navbar.Text>
+                )}
                 <Nav>
                     <Dropdown alignRight>
                         <Dropdown.Toggle variant="success">
@@ -57,34 +67,30 @@ const Header = () => {
                                             <AiFillDelete
                                                 fontSize="20px"
                                                 style={{ cursor: "pointer" }}
-                                                onClick={() => {
+                                                onClick={() =>
                                                     dispatch({
                                                         type: "REMOVE_FROM_CART",
                                                         payload: prod,
                                                     })
-                                                }}
+                                                }
                                             />
                                         </span>
                                     ))}
                                     <Link to="/cart">
                                         <Button style={{ width: "95%", margin: "0 10px" }}>
-                                            Go to Cart
+                                            Go To Cart
                                         </Button>
                                     </Link>
-
                                 </>
                             ) : (
-                                <span style={{ padding: 10 }}>Cart is empty!</span>
+                                <span style={{ padding: 10 }}>Cart is Empty!</span>
                             )}
-
-
                         </Dropdown.Menu>
                     </Dropdown>
-
                 </Nav>
             </Container>
         </Navbar>
-    )
+    );
 };
 
 export default Header;

@@ -1,10 +1,14 @@
 import { Button, Form } from "react-bootstrap";
 import { CartState } from "../context/Context";
-import { useState } from 'react';
 import Rating from "./Rating";
 
 const Filters = () => {
-    const [ rating, setRating ] = useState(5);
+    const {
+        productDispatch,
+        productState: { byStock, byFastDelivery, sort, byRating },
+    } = CartState();
+
+    // make state for rating
 
     return (
         <div className="filters">
@@ -16,12 +20,12 @@ const Filters = () => {
                     name="group1"
                     type="radio"
                     id={`inline-1`}
-                    // onChange={() =>
-                    //     productDispatch({
-                    //         type: "SORT_BY_PRICE",
-                    //         payload: "lowToHigh",
-                    //     })
-                    // }
+                    onChange={() =>
+                        productDispatch({
+                            type: "SORT_BY_PRICE",
+                            payload: "lowToHigh",
+                        })
+                    }
                     checked={sort === "lowToHigh" ? true : false}
                 />
             </span>
@@ -32,12 +36,12 @@ const Filters = () => {
                     name="group1"
                     type="radio"
                     id={`inline-2`}
-                    // onChange={() =>
-                    //     productDispatch({
-                    //         type: "SORT_BY_PRICE",
-                    //         payload: "highToLow",
-                    //     })
-                    // }
+                    onChange={() =>
+                        productDispatch({
+                            type: "SORT_BY_PRICE",
+                            payload: "highToLow",
+                        })
+                    }
                     checked={sort === "highToLow" ? true : false}
                 />
             </span>
@@ -48,11 +52,11 @@ const Filters = () => {
                     name="group1"
                     type="checkbox"
                     id={`inline-3`}
-                    // onChange={() =>
-                    //     productDispatch({
-                    //         type: "FILTER_BY_STOCK",
-                    //     })
-                    // }
+                    onChange={() =>
+                        productDispatch({
+                            type: "FILTER_BY_STOCK",
+                        })
+                    }
                     checked={byStock}
                 />
             </span>
@@ -63,11 +67,11 @@ const Filters = () => {
                     name="group1"
                     type="checkbox"
                     id={`inline-4`}
-                    // onChange={() =>
-                    //     productDispatch({
-                    //         type: "FILTER_BY_DELIVERY",
-                    //     })
-                    // }
+                    onChange={() =>
+                        productDispatch({
+                            type: "FILTER_BY_DELIVERY",
+                        })
+                    }
                     checked={byFastDelivery}
                 />
             </span>
@@ -75,22 +79,22 @@ const Filters = () => {
                 <label style={{ paddingRight: 10 }}>Rating: </label>
                 <Rating
                     rating={byRating}
-                    // onClick={(i) =>
-                    //     productDispatch({
-                    //         type: "FILTER_BY_RATING",
-                    //         payload: i + 1,
-                    //     })
-                    // }
+                    onClick={(i) =>
+                        productDispatch({
+                            type: "FILTER_BY_RATING",
+                            payload: i + 1,
+                        })
+                    }
                     style={{ cursor: "pointer" }}
                 />
             </span>
             <Button
                 variant="light"
-                // onClick={() =>
-                //     productDispatch({
-                //         type: "CLEAR_FILTERS",
-                //     })
-                // }
+                onClick={() =>
+                    productDispatch({
+                        type: "CLEAR_FILTERS",
+                    })
+                }
             >
                 Clear Filters
             </Button>
